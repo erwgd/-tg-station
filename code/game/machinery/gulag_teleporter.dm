@@ -21,6 +21,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/message_cooldown
 	var/breakout_time = 600
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
+	var/jumpskirt_type = /obj/item/clothing/under/rank/prisoner/skirt
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
@@ -28,6 +29,7 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
+		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas))
@@ -40,10 +42,6 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.linked_teleporter = null
 	return ..()
-
-/obj/machinery/gulag_teleporter/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
@@ -68,16 +66,16 @@ The console is located at computer/gulag_teleporter.dm
 
 	return ..()
 
-/obj/machinery/gulag_teleporter/update_icon()
+/obj/machinery/gulag_teleporter/update_icon_state()
 	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 	//no power or maintenance
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
-		if((stat & MAINT) || panel_open)
+		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
 		return
 
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
 		return
 
@@ -87,7 +85,7 @@ The console is located at computer/gulag_teleporter.dm
 		return
 
 
-/obj/machinery/gulag_teleporter/relaymove(mob/user)
+/obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)
 	if(user.stat != CONSCIOUS)
 		return
 	if(locked)
@@ -97,7 +95,7 @@ The console is located at computer/gulag_teleporter.dm
 		return
 	open_machine()
 
-/obj/machinery/gulag_teleporter/container_resist(mob/living/user)
+/obj/machinery/gulag_teleporter/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		return
@@ -105,7 +103,7 @@ The console is located at computer/gulag_teleporter.dm
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
@@ -154,7 +152,8 @@ The console is located at computer/gulag_teleporter.dm
 	strip_occupant()
 	var/mob/living/carbon/human/prisoner = occupant
 	if(!isplasmaman(prisoner) && jumpsuit_type)
-		prisoner.equip_to_appropriate_slot(new jumpsuit_type)
+		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
+		prisoner.equip_to_appropriate_slot(new suit_or_skirt)
 	if(shoes_type)
 		prisoner.equip_to_appropriate_slot(new shoes_type)
 	if(id)
@@ -176,6 +175,6 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp bluespace beacon"
 	desc = "A receiving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "light_on-w"
+	icon_state = "light_on-8"
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE

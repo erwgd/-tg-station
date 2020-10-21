@@ -19,8 +19,8 @@ Chilling extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
-	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
-	playsound(src, 'sound/effects/glassbr1.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glassbr1.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/chilling/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -149,6 +149,9 @@ Chilling extracts:
 /obj/item/slimecross/chilling/bluespace/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !isliving(target) || active)
 		return
+	if(HAS_TRAIT(target, TRAIT_NO_TELEPORT))
+		to_chat(user, "<span class='warning'>[target] resists being linked with [src]!</span>")
+		return
 	if(target in allies)
 		allies -= target
 		to_chat(user, "<span class='notice'>You unlink [src] with [target].</span>")
@@ -235,7 +238,7 @@ Chilling extracts:
 		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm.</span>")
 	else
 		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, but nothing happens...</span>")
-	..()
+	return ..()
 
 /obj/item/slimecross/chilling/green
 	colour = "green"

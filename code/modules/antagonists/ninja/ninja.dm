@@ -2,7 +2,10 @@
 	name = "Ninja"
 	antagpanel_category = "Ninja"
 	job_rank = ROLE_NINJA
+	antag_hud_type = ANTAG_HUD_NINJA
+	antag_hud_name = "ninja"
 	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
@@ -10,16 +13,16 @@
 
 /datum/antagonist/ninja/New()
 	if(helping_station)
-		can_hijack = HIJACK_PREVENT
+		can_elimination_hijack = ELIMINATION_PREVENT
 	. = ..()
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_ninja_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_ninja_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)
@@ -35,9 +38,9 @@
 		if(M.current && M.current.stat != DEAD)
 			if(ishuman(M.current))
 				if(M.special_role)
-					possible_targets[M] = 0						//bad-guy
+					possible_targets[M] = FALSE						//bad-guy
 				else if(M.assigned_role in GLOB.command_positions)
-					possible_targets[M] = 1						//good-guy
+					possible_targets[M] = TRUE						//good-guy
 
 	var/list/possible_objectives = list(1,2,3,4)
 
@@ -142,19 +145,9 @@
 		else
 			return
 	if(helping_station)
-		can_hijack = HIJACK_PREVENT
+		can_elimination_hijack = ELIMINATION_PREVENT
 	new_owner.assigned_role = ROLE_NINJA
 	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has [adj] ninja'ed [key_name(new_owner)].")
-
-/datum/antagonist/ninja/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
-	ninjahud.join_hud(ninja)
-	set_antag_hud(ninja, "ninja")
-
-/datum/antagonist/ninja/proc/update_ninja_icons_removed(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
-	ninjahud.leave_hud(ninja)
-	set_antag_hud(ninja, null)

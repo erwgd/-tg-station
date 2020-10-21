@@ -8,6 +8,7 @@
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	blood_state = BLOOD_STATE_XENO
+	beauty = -250
 
 /obj/effect/decal/cleanable/xenoblood/Initialize()
 	. = ..()
@@ -25,11 +26,12 @@
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 	mergeable_decal = FALSE
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
-	set waitfor = 0
+/obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions, mapload=FALSE)
+	set waitfor = FALSE
 	var/direction = pick(directions)
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
-		sleep(2)
+		if (!mapload)
+			sleep(2)
 		if(i > 0)
 			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
 		if(!step_to(src, get_step(src, direction), 0))

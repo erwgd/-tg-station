@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
@@ -13,16 +13,16 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ae" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "af" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "ag" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/oldaisat)
@@ -49,18 +49,14 @@
 	pixel_x = 1;
 	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "al" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "am" = (
@@ -101,11 +97,9 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "au" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "av" = (
@@ -125,7 +119,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ay" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel/airless,
@@ -156,7 +150,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
 "aE" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /turf/open/floor/engine,
@@ -181,9 +175,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "aJ" = (
-/obj/item/stack/cable_coil/cut/red{
-	amount = 1
-	},
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "aK" = (
@@ -270,7 +262,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
 "aX" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /obj/item/stack/spacecash,
@@ -402,7 +394,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bs" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -411,6 +403,7 @@
 /area/template_noop)
 "bt" = (
 /obj/structure/table,
+/obj/item/gps/spaceruin,
 /obj/item/radio/off,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
@@ -435,7 +428,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bz" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -482,7 +475,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -573,7 +566,7 @@
 "bU" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/chair,
-/obj/item/clothing/under/rank/centcom_officer,
+/obj/item/clothing/under/rank/centcom/officer,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/airless,
@@ -669,7 +662,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "cl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -765,7 +758,7 @@
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "cB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
@@ -879,9 +872,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/oldaisat)
 "cW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/tcommsat/oldaisat)
 "cX" = (
@@ -904,6 +895,16 @@
 "da" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"jZ" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/space/fancytech,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"AX" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/lootdrop/space/fancytool,
+/turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 
 (1,1,1) = {"
@@ -2583,7 +2584,7 @@ bB
 bH
 bw
 bw
-bw
+AX
 bT
 bw
 bw
@@ -3468,7 +3469,7 @@ ag
 ag
 ag
 bQ
-aD
+jZ
 bY
 az
 aD

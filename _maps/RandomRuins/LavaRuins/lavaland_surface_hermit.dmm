@@ -33,7 +33,7 @@
 	},
 /area/ruin/powered)
 "j" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},
@@ -99,7 +99,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "w" = (
-/obj/machinery/smartfridge/survival_pod,
+/obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "x" = (
@@ -166,7 +166,7 @@
 "J" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered)
 "L" = (

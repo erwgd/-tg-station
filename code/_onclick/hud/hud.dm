@@ -6,12 +6,13 @@
 
 // The default UI style is the first one in the list
 GLOBAL_LIST_INIT(available_ui_styles, list(
-	"Midnight" = 'icons/mob/screen_midnight.dmi',
-	"Retro" = 'icons/mob/screen_retro.dmi',
-	"Plasmafire" = 'icons/mob/screen_plasmafire.dmi',
-	"Slimecore" = 'icons/mob/screen_slimecore.dmi',
-	"Operative" = 'icons/mob/screen_operative.dmi',
-	"Clockwork" = 'icons/mob/screen_clockwork.dmi'
+	"Midnight" = 'icons/hud/screen_midnight.dmi',
+	"Retro" = 'icons/hud/screen_retro.dmi',
+	"Plasmafire" = 'icons/hud/screen_plasmafire.dmi',
+	"Slimecore" = 'icons/hud/screen_slimecore.dmi',
+	"Operative" = 'icons/hud/screen_operative.dmi',
+	"Clockwork" = 'icons/hud/screen_clockwork.dmi',
+	"Glass" = 'icons/hud/screen_glass.dmi'
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -33,7 +34,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/alien_plasma_display
 	var/obj/screen/alien_queen_finder
 
-	var/obj/screen/devil/soul_counter/devilsouldisplay
 
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
@@ -57,7 +57,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
-
+	var/obj/screen/wanted/wanted_lvl
+	var/obj/screen/spacesuit
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -80,6 +81,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
@@ -100,9 +103,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	healths = null
 	healthdoll = null
+	wanted_lvl = null
 	internals = null
+	spacesuit = null
 	lingchemdisplay = null
-	devilsouldisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null
@@ -113,9 +117,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	mymob = null
 
 	return ..()
-
-/mob
-	var/hud_type = /datum/hud
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -192,7 +193,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
-	reorganize_alerts()
+	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
@@ -253,9 +254,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
+		to_chat(usr, "<span class='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
-		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")
+		to_chat(usr, "<span class='warning'>This mob type does not use a HUD.</span>")
 
 
 //(re)builds the hand ui slots, throwing away old ones

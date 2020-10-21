@@ -14,17 +14,22 @@
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 
 /datum/mutation/human/chameleon/on_life()
 	owner.alpha = max(0, owner.alpha - 25)
 
 /datum/mutation/human/chameleon/proc/on_move()
+	SIGNAL_HANDLER
+
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
-/datum/mutation/human/chameleon/on_attack_hand(atom/target, proximity)
-	if(proximity) //stops tk from breaking chameleon
-		owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+/datum/mutation/human/chameleon/proc/on_attack_hand(atom/target, proximity)
+	SIGNAL_HANDLER
+
+	if(!proximity) //stops tk from breaking chameleon
 		return
+	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	if(..())

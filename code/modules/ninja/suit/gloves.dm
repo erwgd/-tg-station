@@ -24,7 +24,7 @@
 	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
 	name = "ninja gloves"
 	icon_state = "s-ninja"
-	item_state = "s-ninja"
+	inhand_icon_state = "s-ninja"
 	siemens_coefficient = 0
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -32,8 +32,8 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/draining = 0
-	var/candrain = 0
+	var/draining = FALSE
+	var/candrain = FALSE
 	var/mindrain = 200
 	var/maxdrain = 400
 
@@ -72,10 +72,10 @@
 
 /obj/item/clothing/gloves/space_ninja/proc/toggledrain()
 	var/mob/living/carbon/human/U = loc
-	to_chat(U, "You <b>[candrain?"disable":"enable"]</b> special interaction.")
+	to_chat(U, "<span class='notice'>You [candrain?"disable":"enable"] special interaction.</span>")
 	candrain=!candrain
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
-		. += "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."
+		. += "[p_their(TRUE)] energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."

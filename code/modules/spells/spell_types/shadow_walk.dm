@@ -24,7 +24,7 @@
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
+			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
 			user.SetAllImmobility(0)
 			user.setStaminaLoss(0, 0)
@@ -45,7 +45,7 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/dummy/phased_mob/shadow/relaymove(mob/user, direction)
+/obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
 	var/turf/newLoc = get_step(src,direction)
 	if(isspaceturf(newLoc))
 		to_chat(user, "<span class='warning'>It really would not be wise to go into space.</span>")
@@ -68,7 +68,7 @@
 		else
 			visible_message("<span class='boldwarning'>[jaunter] emerges from the darkness!</span>")
 		jaunter.forceMove(get_turf(src))
-		playsound(get_turf(jaunter), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+		playsound(get_turf(jaunter), 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 		jaunter = null
 	qdel(src)
 

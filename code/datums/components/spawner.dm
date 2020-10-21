@@ -21,14 +21,16 @@
 	if(_max_mobs)
 		max_mobs=_max_mobs
 
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/stop_spawning)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/stop_spawning)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/spawner/process()
 	try_spawn_mob()
 
 
-/datum/component/spawner/proc/stop_spawning(force, hint)
+/datum/component/spawner/proc/stop_spawning(force)
+	SIGNAL_HANDLER
+
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/simple_animal/L in spawned_mobs)
 		if(L.nest == src)
@@ -38,9 +40,9 @@
 /datum/component/spawner/proc/try_spawn_mob()
 	var/atom/P = parent
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return
 	if(spawn_delay > world.time)
-		return 0
+		return
 	spawn_delay = world.time + spawn_time
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(P.loc)
