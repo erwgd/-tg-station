@@ -118,14 +118,12 @@
 	else
 		return ..()
 
-
-
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "empty gibber"
+	set name = "Empty gibber"
 	set src in oview(1)
 
-	if(usr.incapacitated())
+	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -174,9 +172,7 @@
 		var/mob/living/carbon/C = occupant
 		typeofmeat = C.type_of_meat
 		gibtype = C.gib_type
-		if(ismonkey(C))
-			typeofskin = /obj/item/stack/sheet/animalhide/monkey
-		else if(isalien(C))
+		if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 	var/occupant_volume
 	if(occupant?.reagents)
@@ -220,7 +216,7 @@
 			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
-	pixel_x = initial(pixel_x) //return to its spot after shaking
+	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
 	update_icon()
 
@@ -230,9 +226,9 @@
 
 /obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
 	var/atom/input = get_step(src, input_dir)
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/victim = AM
 
-		if(M.loc == input)
-			M.forceMove(src)
-			M.gib()
+		if(victim.loc == input)
+			victim.forceMove(src)
+			victim.gib()

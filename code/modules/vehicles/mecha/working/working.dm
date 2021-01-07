@@ -4,10 +4,6 @@
 	/// Handles an internal ore box for working mechs
 	var/obj/structure/ore_box/box
 
-/obj/vehicle/sealed/mecha/working/Initialize()
-	. = ..()
-	box = new(src)
-
 /obj/vehicle/sealed/mecha/working/Destroy()
 	QDEL_NULL(box)
 	return ..()
@@ -18,10 +14,10 @@
 		collect_ore()
 
 /**
-  * Handles collecting ore.
-  *
-  * Checks for a hydraulic clamp or ore box manager and if it finds an ore box inside them puts ore in the ore box.
-  */
+ * Handles collecting ore.
+ *
+ * Checks for a hydraulic clamp or ore box manager and if it finds an ore box inside them puts ore in the ore box.
+ */
 /obj/vehicle/sealed/mecha/working/proc/collect_ore()
 	if(!box)
 		return
